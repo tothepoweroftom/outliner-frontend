@@ -1,0 +1,9 @@
+server/data/key.json
+cloud-run-server/api-key.json
+node_modules/
+.DS_Store
+*.pyc
+static/build/*
+static/images/font/
+server/
+static/
