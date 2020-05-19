@@ -15,7 +15,7 @@ function CameraView() {
         // Do stuff with the photo...
         setLoading(true)
         console.log('takePhoto');
-        console.log(dataUri)
+        // console.log(dataUri)
         let data = {
             "img": dataUri
         }

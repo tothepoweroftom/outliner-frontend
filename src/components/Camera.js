@@ -80,6 +80,7 @@ class Camera extends React.Component {
 
         <video
           ref={this.videoRef}
+          playsInline={true}
           autoPlay={true}
         />
  

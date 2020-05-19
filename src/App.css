@@ -110,3 +110,14 @@ video {
   width: 90%;
 
 }
+
+@media screen and (min-width: 768px){
+  #photo-canvas {
+    height: 50vh;
+    max-height: 500px;
+    padding: 5vw;
+    width: 90%;
+    max-width: 500px;
+  
+  }
+}

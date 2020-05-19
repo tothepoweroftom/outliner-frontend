@@ -146,8 +146,9 @@ class ResultsView extends React.Component {
 
         image.onload =  () => {
           console.log(image.width, image.height)
-          let xFactor = image.width*(ctx.canvas.width/image.width)
-          let yFactor = image.height*(ctx.canvas.height/image.height)
+
+          let xFactor = canvas.width
+          let yFactor = canvas.height
 
             ctx.drawImage(image, 0, 0, xFactor, yFactor)
             console.log(this.state.labels)
