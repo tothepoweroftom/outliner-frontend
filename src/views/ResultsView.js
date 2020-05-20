@@ -53,18 +53,22 @@ class ResultsView extends React.Component {
       let labels;
       let bagofwords = {}
       if(this.state.labels) {
-        // console.log(this.state.labels)
+        // //console.log(this.state.labels)
         labels =  this.state.labels.labels.map((label) => {
-          console.log(label)
+          //console.log(label)
          let tags =  RiTa.getPosTags(label, true)
-          console.log(tags)
+          //console.log(tags)
           tags.forEach((tag)=>{
             if(bagofwords[tag]){
-              bagofwords[tag].push({word: label, tag: tag})
-            } else {
+              if(!bagofwords[tag].includes(label)){
+                bagofwords[tag].push( label)
+
+              }            } else {
               bagofwords[tag] = []
-              bagofwords[tag].push({word: label, tag: tag})
-  
+              if(!bagofwords[tag].includes(label)){
+                bagofwords[tag].push(label)
+
+              }  
             }
           })
     
@@ -72,16 +76,21 @@ class ResultsView extends React.Component {
 // 
         if(this.state.labels.objects) {
           this.state.labels.objects.map((obj) => {
-            console.log(obj.name)
+            //console.log(obj.name)
            let tags =  RiTa.getPosTags(obj.name, true)
-            console.log(tags)
+            //console.log(tags)
             tags.forEach((tag)=>{
               if(bagofwords[tag]){
-                bagofwords[tag].push({word: obj.name, tag: tag})
+                if(!bagofwords[tag].includes(obj.name)){
+                  bagofwords[tag].push(obj.name)
+
+                }                
               } else {
                 bagofwords[tag] = []
-                bagofwords[tag].push({word: obj.name, tag: tag})
-    
+                if(!bagofwords[tag].includes(obj.name)){
+                  bagofwords[tag].push(obj.name)
+
+                }    
               }
             })
            })
@@ -89,24 +98,29 @@ class ResultsView extends React.Component {
 // OCR
         if(this.state.labels.ocr) {
           this.state.labels.ocr.forEach((obj, index) => {
-            console.log(obj)
+            //console.log(obj)
             if(index>0 && obj.length>5){
               let tags =  RiTa.getPosTags(obj, true)
-                console.log(tags)
+                ////console.log(tags)
                 tags.forEach((tag)=>{
                   if(bagofwords[tag]){
-                    bagofwords[tag].push({word: obj, tag: tag})
+                    if(!bagofwords[tag].includes(obj)){
+                      bagofwords[tag].push(obj)
+
+                    }
                   } else {
                     bagofwords[tag] = []
-                    bagofwords[tag].push({word: obj, tag: tag})
-        
+                    if(!bagofwords[tag].includes(obj)){
+                      bagofwords[tag].push(obj)
+
+                    }        
                   }
                 })
             }
            })
           
         }
-        console.log(bagofwords)
+        // //console.log(bagofwords)
       }
 
       if(Object.keys(bagofwords).length>0){
@@ -122,13 +136,15 @@ class ResultsView extends React.Component {
   }
 
     formInventions(bagofwords) {
-      console.log(bagofwords['n'])
+      //console.log(bagofwords['n'])
 
       let inventions = []
       
       for(let i=0;i<15;i++){
         let sentence = `It's a `
-        let randomNoun = bagofwords['n'][Math.floor(Math.random()*bagofwords['n'].length)].word
+
+        let nounIndex = Math.floor(Math.random()*bagofwords['n'].length)
+        let randomNoun = bagofwords['n'][nounIndex]
         randomNoun = randomNoun.toLowerCase()
         sentence += `${randomNoun} `
 
@@ -138,12 +154,12 @@ class ResultsView extends React.Component {
         let randomAdjective = ExtraWords['jj'][Math.floor(Math.random()*ExtraWords['jj'].length)]
         randomAdjective = this.isVowel(randomAdjective)
         sentence += `${randomAdjective} `
-
-        randomNoun = bagofwords['n'][Math.floor(Math.random()*bagofwords['n'].length)].word
+        nounIndex = (nounIndex+1)%bagofwords['n'].length
+        randomNoun = bagofwords['n'][nounIndex]
         randomNoun = randomNoun.toLowerCase()
         sentence += `${randomNoun} `
 
-        console.log(sentence)
+        // //console.log(sentence)
         inventions.push(sentence)
 
       }
@@ -151,6 +167,7 @@ class ResultsView extends React.Component {
       this.setState({inventions: inventions})
 
     }
+    
 
     drawImageToCanvas() {
         let targetWidth, targetHeight;
@@ -164,30 +181,39 @@ class ResultsView extends React.Component {
    
 
         var canvas = document.getElementById("photo-canvas");
-        canvas.width = targetWidth * window.devicePixelRatio;
-        canvas.height = targetHeight * window.devicePixelRatio;
+ 
         var ctx = canvas.getContext("2d");
         canvas.width = targetWidth * window.devicePixelRatio;
         canvas.height = targetHeight * window.devicePixelRatio;
         canvas.style.width = `${targetWidth}px`;
         canvas.style.height = `${targetHeight}px`;
         // ctx.canvas.height = window.innerHeight;
-
+        function scaleToFit(img){
+            // get the scale
+            var scale = Math.min(canvas.width / img.width, canvas.height / img.height);
+            // get the top left position of the image
+            var x = (canvas.width / 2) - (img.width / 2) * scale;
+            var y = (canvas.height / 2) - (img.height / 2) * scale;
+            ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+        }
         var image = new Image();
         image.src = localStorage.image
 
         image.onload =  () => {
-          console.log(image.width, image.height)
+          //console.log(image.width, image.height)
 
-          let xFactor = image.width/canvas.width
-          let yFactor = image.height/canvas.height
+          let xFactor =canvas.width / image.width
+          let yFactor = canvas.height/image.height
+          //console.log(xFactor)
 
-          ctx.drawImage(
-            image, 0, 0, 
-            image.width * window.devicePixelRatio * xFactor, 
-            image.height * window.devicePixelRatio * yFactor
-          );
-            console.log(this.state.labels)
+          scaleToFit(image)
+
+          // ctx.drawImage(
+          //   image, 0, 0, 
+          //    window.devicePixelRatio * xFactor,
+          //    window.devicePixelRatio * yFactor
+          // );
+            //console.log(this.state.labels)
             this.getWords()
 
 
