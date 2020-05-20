@@ -117,13 +117,16 @@ video {
 
 @media screen and (min-width: 768px){
   #photo-canvas {
- padding: 5vw;
+ margin: 5vw;
   
   }
 
   .label {
-    max-width: 300px;
+    /* max-width: 300px; */
     border:1px solid white;
+    align-items: center !important;
+    left: 50%;
+    transform: translate(-50%, 0);
   }
 }
 
@@ -137,4 +140,21 @@ video {
 .lower-label {
   font-size: calc(12px + 2vw);
 
+}
+
+.bottom {
+  color:white;
+  width: 90%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  text-align: left;
+  align-items: flex-end;
+}
+
+.bottom-button {
+  color:white;
+  font-size: large;
+  margin: 20px 0px;
+  
 }

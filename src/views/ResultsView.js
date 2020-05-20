@@ -2,7 +2,10 @@ import React from 'react';
 import {motion} from "framer-motion"
 import ExtraWords from '../data/BackupData'
 import * as RiTa from 'rita'
+import {
 
+  Link
+} from "react-router-dom";
 function ListItem(props) {
   // Correct! There is no need to specify the key here:
   return <li>{props.value}</li>;
@@ -253,9 +256,17 @@ class ResultsView extends React.Component {
                   </p>
                   <p className="lower-label">
                   {this.state.inventionsB[this.state.inventionIndex]}
-
+                  
+                  </p>
+                  <p className="lower-label">
+                  ↺
                   </p>
                
+                </div>
+
+                <div className="bottom">
+                  <Link to="/camera"><button className="bottom-button">
+                    Back</button></Link>
                 </div>
             </div>
         )
