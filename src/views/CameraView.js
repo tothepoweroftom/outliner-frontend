@@ -25,6 +25,7 @@ function CameraView() {
             }
         };
         axios
+            // .post('http://0.0.0.0:8080/', data, config)
             .post('https://visionfa-idvgffrwca-ez.a.run.app/', data, config)
             .then(response => {
                 // console.log(response.data)

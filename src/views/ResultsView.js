@@ -69,7 +69,7 @@ class ResultsView extends React.Component {
           })
     
          })
-
+// 
         if(this.state.labels.objects) {
           this.state.labels.objects.map((obj) => {
             console.log(obj.name)
@@ -85,6 +85,26 @@ class ResultsView extends React.Component {
               }
             })
            })
+        }
+// OCR
+        if(this.state.labels.ocr) {
+          this.state.labels.ocr.forEach((obj, index) => {
+            console.log(obj)
+            if(index>0 && obj.length>5){
+              let tags =  RiTa.getPosTags(obj, true)
+                console.log(tags)
+                tags.forEach((tag)=>{
+                  if(bagofwords[tag]){
+                    bagofwords[tag].push({word: obj, tag: tag})
+                  } else {
+                    bagofwords[tag] = []
+                    bagofwords[tag].push({word: obj, tag: tag})
+        
+                  }
+                })
+            }
+           })
+          
         }
         console.log(bagofwords)
       }
