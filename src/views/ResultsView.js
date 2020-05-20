@@ -133,12 +133,24 @@ class ResultsView extends React.Component {
     }
 
     drawImageToCanvas() {
+        let targetWidth, targetHeight;
+        if(window.innerWidth>768){
+          targetWidth = window.innerWidth*0.5
+          targetHeight = targetWidth*(0.75)
+        } else {
+          targetWidth = window.innerWidth*0.9
+          targetHeight = window.innerHeight*0.5
+        }
    
 
         var canvas = document.getElementById("photo-canvas");
+        canvas.width = targetWidth * window.devicePixelRatio;
+        canvas.height = targetHeight * window.devicePixelRatio;
         var ctx = canvas.getContext("2d");
-        ctx.canvas.width = window.innerWidth;
-
+        canvas.width = targetWidth * window.devicePixelRatio;
+        canvas.height = targetHeight * window.devicePixelRatio;
+        canvas.style.width = `${targetWidth}px`;
+        canvas.style.height = `${targetHeight}px`;
         // ctx.canvas.height = window.innerHeight;
 
         var image = new Image();
@@ -147,10 +159,14 @@ class ResultsView extends React.Component {
         image.onload =  () => {
           console.log(image.width, image.height)
 
-          let xFactor = canvas.width
-          let yFactor = canvas.height
+          let xFactor = image.width/canvas.width
+          let yFactor = image.height/canvas.height
 
-            ctx.drawImage(image, 0, 0, xFactor, yFactor)
+          ctx.drawImage(
+            image, 0, 0, 
+            image.width * window.devicePixelRatio * xFactor, 
+            image.height * window.devicePixelRatio * yFactor
+          );
             console.log(this.state.labels)
             this.getWords()
 
