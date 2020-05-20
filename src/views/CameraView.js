@@ -59,8 +59,8 @@ function CameraView(props) {
             }
         };
         axios
-            .post('http://0.0.0.0:8080/', data, config)
-            // .post('https://outliner-idvgffrwca-ez.a.run.app/', data, config)
+            // .post('http://0.0.0.0:8080/', data, config)
+            .post('https://outliner-idvgffrwca-ez.a.run.app/', data, config)
             .then(response => {
                 // console.log(response.data.image)
                 localStorage.image = 'data:image/png;base64,' + response.data.image
