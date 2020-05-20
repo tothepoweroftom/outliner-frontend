@@ -197,51 +197,24 @@ class ResultsView extends React.Component {
             ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
         }
         var image = new Image();
-        image.src = localStorage.image
+        image.src = localStorage.baseImage
 
         image.onload =  () => {
-          //console.log(image.width, image.height)
-
-          let xFactor =canvas.width / image.width
-          let yFactor = canvas.height/image.height
-          //console.log(xFactor)
-
           scaleToFit(image)
-
-          // ctx.drawImage(
-          //   image, 0, 0, 
-          //    window.devicePixelRatio * xFactor,
-          //    window.devicePixelRatio * yFactor
-          // );
-            //console.log(this.state.labels)
             this.getWords()
-
-
-            // for(let i=0; i<this.state.labels.objects.length; i++){
-            //   ctx.strokeStyle = "#FF0000";
-            //   let vertices = this.state.labels.objects[i].vertices
-            //   let name = this.state.labels.objects[i].name;
-            //   let width = parseFloat(vertices[1].x) - parseFloat(vertices[0].x)
-            //   let height = parseFloat(vertices[2].y) - parseFloat(vertices[0].y) 
-            //   ctx.beginPath()
-
-            //   ctx.arc(parseFloat(vertices[0].x)*xFactor + width*0.5*xFactor, parseFloat(vertices[0].y)*yFactor + height*0.5*yFactor, 10,0, 2 * Math.PI);
-            //   ctx.fillStyle = "#00aaa0";
-
-            //   ctx.fill()
-            //   ctx.fillStyle = "#FFFFFFaa";
-            //   ctx.fillRect(parseFloat(vertices[0].x)*xFactor + width*0.5*xFactor, parseFloat(vertices[0].y)*yFactor + height*0.5*yFactor - 30, 100, 30);
-            //   ctx.fillStyle = "#000000";
-            //   ctx.font = "20px Verdana";
-            //   ctx.fillText(name, parseFloat(vertices[0].x)*xFactor + width*0.5*xFactor, parseFloat(vertices[0].y)*yFactor + height*0.5*yFactor - 10);
-
-            //   ctx.fillStyle = "#FFFFFF40";
-
-
-            // }
-        
-
         };
+
+
+        if(localStorage.image) {
+          var image2 = new Image();
+          image2.src = localStorage.image
+  
+          image2.onload =  () => {
+            scaleToFit(image2)
+              this.getWords()
+          };
+  
+        }
         // canvas.
 
         

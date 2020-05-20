@@ -108,6 +108,7 @@ video {
   /* height: 50vh;
   padding: 5vw;
   width: 90%; */
+  filter: blur(0.5px)
 
 }
 
