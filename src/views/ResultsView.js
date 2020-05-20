@@ -24,6 +24,11 @@ function NumberList(props) {
 
 const numbers = [1, 2, 3, 4, 5];
 
+const colorMap = {
+  'r': '#D60000', 
+  'b': '#2962FF',
+  'y': '#FAF455'
+}
 class ResultsView extends React.Component {
     constructor(props) {
         super(props);
@@ -31,7 +36,9 @@ class ResultsView extends React.Component {
             image: null,
             labels: null, 
             bagofwords: null, 
-            inventions: [], 
+            inventionsA: [], 
+            inventionsB: [], 
+
             inventionIndex: 0,
         };
     }
@@ -138,8 +145,9 @@ class ResultsView extends React.Component {
     formInventions(bagofwords) {
       //console.log(bagofwords['n'])
 
-      let inventions = []
-      
+      let inventionsA = []
+      let inventionsB = []
+
       for(let i=0;i<15;i++){
         let sentence = `It's a `
 
@@ -147,7 +155,9 @@ class ResultsView extends React.Component {
         let randomNoun = bagofwords['n'][nounIndex]
         randomNoun = randomNoun.toLowerCase()
         sentence += `${randomNoun} `
-
+        inventionsA.push(sentence)
+        sentence = ''
+        
         let randomVerb = ExtraWords['vbz'][Math.floor(Math.random()*ExtraWords['vbz'].length)]
         sentence += `that ${randomVerb} `
 
@@ -160,11 +170,12 @@ class ResultsView extends React.Component {
         sentence += `${randomNoun} `
 
         // //console.log(sentence)
-        inventions.push(sentence)
+        inventionsB.push(sentence)
 
       }
 
-      this.setState({inventions: inventions})
+      this.setState({inventionsA: inventionsA})
+      this.setState({inventionsB: inventionsB})
 
     }
     
@@ -173,6 +184,9 @@ class ResultsView extends React.Component {
         let targetWidth, targetHeight;
         if(window.innerWidth>768){
           targetWidth = window.innerWidth*0.5
+          if(targetWidth>500){
+            targetWidth = 500
+          }
           targetHeight = targetWidth*(0.75)
         } else {
           targetWidth = window.innerWidth*0.9
@@ -183,6 +197,7 @@ class ResultsView extends React.Component {
         var canvas = document.getElementById("photo-canvas");
  
         var ctx = canvas.getContext("2d");
+        ctx.imageSmoothingQuality = "high"
         canvas.width = targetWidth * window.devicePixelRatio;
         canvas.height = targetHeight * window.devicePixelRatio;
         canvas.style.width = `${targetWidth}px`;
@@ -221,7 +236,7 @@ class ResultsView extends React.Component {
     }
 
     handleClick() {
-      this.setState({inventionIndex: (this.state.inventionIndex+1)%this.state.inventions.length})
+      this.setState({inventionIndex: (this.state.inventionIndex+1)%this.state.inventionsA.length})
     }
     render() {
  
@@ -232,8 +247,14 @@ class ResultsView extends React.Component {
 
               
                 <div className="labels" onClick={this.handleClick.bind(this)}>
+                  <p style={{color: this.props.color?colorMap[this.props.color]:colorMap["r"]}} className="object-label">
+                  {this.state.inventionsA[this.state.inventionIndex]}
 
-                  {this.state.inventions[this.state.inventionIndex]}
+                  </p>
+                  <p className="lower-label">
+                  {this.state.inventionsB[this.state.inventionIndex]}
+
+                  </p>
                
                 </div>
             </div>

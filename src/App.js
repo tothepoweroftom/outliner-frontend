@@ -15,6 +15,18 @@ import CameraView from './views/CameraView'
 import ResultsView from './views/ResultsView'
 
 export default function App() {
+
+  let [color, setColor] = React.useState('r')
+
+  function handleColor(){
+    if(color==='r'){
+      setColor('b')
+    } else if(color=='b'){
+      setColor('y')
+    } else if (color=='y'){
+      setColor('r')
+    }
+  }
   return (
     <Router>
       <div>
@@ -34,10 +46,10 @@ export default function App() {
             renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/camera">
-            <CameraView />
+            <CameraView color={color} colorCallback={handleColor}/>
           </Route>
           <Route path="/results">
-            <ResultsView />
+            <ResultsView color={color}/>
           </Route>
           <Route path="/">
             <HomeView />

@@ -6,11 +6,20 @@ import axios from 'axios'
 import {useHistory} from "react-router-dom";
 import "../components/loading-spinner.css"
 
-function CameraView() {
+
+const colorMap = {
+    'r': '#D60000', 
+    'b': '#2962FF',
+    'y': '#FAF455'
+}
+function CameraView(props) {
     const history = useHistory();
     let [loading,
         setLoading] = React.useState(false)
-
+    React.useEffect(() => {
+        // Your code here
+        props.colorCallback()
+    }, []);
     function handleTakePhoto(dataUri) {
         // Do stuff with the photo...
         setLoading(true)
@@ -41,7 +50,8 @@ function CameraView() {
     function sendForAlpha(dataUri) {
         console.log("sending for alpha")
         let data = {
-            "img": dataUri
+            "img": dataUri, 
+            "color": props.color
         }
         var config = {
             headers: {
@@ -67,9 +77,9 @@ function CameraView() {
     }
 
     if (loading) {
-
+       
         return (
-            <div className="container loading">
+            <div style={{background: colorMap[props.color?props.color:'r']}} className="container loading">
                 <div className="lds-ripple">
                     <div></div>
                     <div></div>
