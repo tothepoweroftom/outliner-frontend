@@ -13,6 +13,7 @@ import {
 import {HomeView} from './views/HomeView'
 import CameraView from './views/CameraView'
 import ResultsView from './views/ResultsView'
+import InfoView from './views/InfoView'
 
 export default function App() {
 
@@ -29,7 +30,7 @@ export default function App() {
   }
   return (
     <Router>
-      <div>
+      <div className="app">
         {/* <nav>
           <ul>
             <li>
@@ -42,14 +43,20 @@ export default function App() {
           </ul>
         </nav> */}
 
+       
+
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/camera">
+            
             <CameraView color={color} colorCallback={handleColor}/>
           </Route>
           <Route path="/results">
             <ResultsView color={color}/>
+          </Route>
+          <Route path="/info">
+            <InfoView />
           </Route>
           <Route path="/">
             <HomeView />

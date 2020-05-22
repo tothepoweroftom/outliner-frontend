@@ -7,20 +7,30 @@ import {
     Link,
     useRouteMatch
   } from "react-router-dom";
+
+import Navbar from '../components/Navbar'
+
 export const HomeView = () => (
 
     <div className="container">
-        <h1>Welcome to Fab Alt Lens</h1>
-        <h2>Use your camera to ask provocative questions</h2>
+        <Navbar></Navbar>
+        <div className="home-text-div">
+
+        <h2>Hello there!</h2>
+        <p>
+        It’s time to bring more imagination to our reality. I can see things through a different lens, so use your camera to unlock new ideas about what we see.
+        </p>
+        </div>
+
         <Link to="/camera">
 
         <motion.button
-
+        className="btn-black"
         style={{marginTop:"50px"}}
-
+        initial={{scale:0.5}}
         
             animate={{
-            scale: 2
+            scale: 1
         }}
             transition={{
             duration: 0.5

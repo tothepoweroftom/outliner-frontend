@@ -4,6 +4,7 @@ import '../App.css';
 import Camera from '../components/Camera'
 import axios from 'axios'
 import {useHistory} from "react-router-dom";
+import Navbar from '../components/Navbar'
 import "../components/loading-spinner.css"
 
 
@@ -37,7 +38,7 @@ function CameraView(props) {
             // .post('http://0.0.0.0:8080/', data, config)
             .post('https://visionfa-idvgffrwca-ez.a.run.app/', data, config)
             .then(response => {
-                // console.log(response.data)
+                console.log(response.data)
                 localStorage.image = dataUri
                 localStorage.baseImage = dataUri
                 localStorage.labels = response.data.labels;
@@ -85,7 +86,7 @@ function CameraView(props) {
                     <div></div>
                 </div>
 
-                Loading...
+                Reimagining...
             </div>
         )
 
@@ -93,6 +94,7 @@ function CameraView(props) {
 
         return (
             <div className="container">
+                <Navbar></Navbar>
                 <Camera handlePhoto={handleTakePhoto}></Camera>
             </div>
         );
